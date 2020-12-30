@@ -37,10 +37,10 @@
     <StrideIsExecutable Condition=" '$(AndroidApplication)' == 'true'">true</StrideIsExecutable>
 
     <!--asset BuildPath for all platforms (same as package)-->
-    <StrideCompileAssetBuildPath Condition="'$(StrideCompileAssetBuildPath)' == ''">$(ProjectDir)$(BaseIntermediateOutputPath)stride\assetbuild\data</StrideCompileAssetBuildPath>
+    <StrideCompileAssetBuildPath Condition="'$(StrideCompileAssetBuildPath)' == ''">$(BaseIntermediateOutputPath)stride\assetbuild\data</StrideCompileAssetBuildPath>
 
     <!--asset OutputPath for Android.-->
-    <StrideCompileAssetOutputPath Condition="'$(StrideCompileAssetOutputPath)' == '' and '$(StridePlatform)' == 'Android'">$(ProjectDir)$(IntermediateOutputPath)assets\data</StrideCompileAssetOutputPath>
+    <StrideCompileAssetOutputPath Condition="'$(StrideCompileAssetOutputPath)' == '' and '$(StridePlatform)' == 'Android'">$(IntermediateOutputPath)assets\data</StrideCompileAssetOutputPath>
 
     <!--asset OutputPath for other platforms. Note: this is overridden for UnitTests projects. -->
     <StrideCompileAssetOutputPath Condition="'$(StrideCompileAssetOutputPath)' == ''">$(TargetDir)data</StrideCompileAssetOutputPath>
@@ -142,7 +142,7 @@
     <MakeDir Directories="$(TargetDir)"/>
 
     <!-- Compile assets -->
-    <Exec WorkingDirectory="$(TargetDir)" Command="$(StrideCompileAssetCommandProxy)" />
+    <Exec WorkingDirectory="$(ProjectDir)" Command="$(StrideCompileAssetCommandProxy)" />
     
     <!-- Android specific: include build output in _AndroidAssetsDest so that APK is regenerated -->
     <ItemGroup Condition="'$(StridePlatform)' == 'Android'">
@@ -211,7 +211,7 @@
     <!--<PackAssets ProjectFile="$(MSBuildProjectFile)" IntermediatePackagePath="$(IntermediateOutputPath)\stride">
       <Output TaskParameter="GeneratedItems" ItemName="None"/>
     </PackAssets>-->
-    <Exec Command="&quot;$(StrideCompileAssetCommand)&quot; --pack --package-file=&quot;$(MSBuildProjectFullPath)&quot; --build-path=&quot;$(ProjectDir)$(BaseIntermediateOutputPath)stride\pack&quot;" ConsoleToMsBuild="true">
+    <Exec Command="&quot;$(StrideCompileAssetCommand)&quot; --pack --package-file=&quot;$(MSBuildProjectFullPath)&quot; --build-path=&quot;$(BaseIntermediateOutputPath)stride\pack&quot;" ConsoleToMsBuild="true">
       <Output TaskParameter="ConsoleOutput" ItemName="PackAssetsLine" />
     </Exec>
     <ItemGroup>
